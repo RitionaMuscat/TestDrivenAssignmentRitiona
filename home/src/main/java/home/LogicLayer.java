@@ -13,10 +13,11 @@ public class LogicLayer {
 	{
 		this.dataLayer = dataLayer;
 	}
-	
-	public String getCurrencyConversion(String baseCurrency, String CurrencyToGetRate)
+
+	public String getCurrencyConversion(String baseCurrency, String CurrencyToGetRate, double amountToConvert)
 	{
 		double rate = 0;
+		double ConversionAmountTotal = 0;
 		try {
 			String json = dataLayer.getCurrencyConversion(baseCurrency);
 			JSONObject jsonResponse = new JSONObject(json);
@@ -26,13 +27,14 @@ public class LogicLayer {
 				Double coversionRate = hits.getDouble(CurrencyToGetRate);
 				rate = coversionRate;
 			}
-			return  CurrencyToGetRate+" "+rate;
+			ConversionAmountTotal = amountToConvert * rate;
+			return  baseCurrency+amountToConvert+" converts to "+CurrencyToGetRate+" " +ConversionAmountTotal+" today";
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			return "-1";
 		}
 	}
-	
+
 	public List<String> getDefinition(String term) {
 		List<String> _Termlist=new ArrayList<String>();  
 		try {
@@ -52,23 +54,41 @@ public class LogicLayer {
 		}
 		return _Termlist;
 	}
-	
+
 
 	public String getMovie(String movieName) {
 		String MovieName = "";
+		double rating = 0;
 		try {
 			String json = dataLayer.getJsonMovie(movieName);
 			JSONObject jsonResponse = new JSONObject(json);
 
 			for (int i = 0; i < jsonResponse.length(); i++) {
 				MovieName = jsonResponse.getString("title");
-				MovieName = "Movie: "+ MovieName + "\n" + "Rating: "+ jsonResponse.getString("rating") + "\n" + "Plot: " + jsonResponse.getString("plot");
+				rating = jsonResponse.getDouble("rating");
+				if(rating <=4.0)
+				{
+					MovieName = "Movie: "+ MovieName + "\n" + "Rating: Bad ("+ rating + ")\n" + "Plot: " + jsonResponse.getString("plot");
+				}
+				else if(rating >= 4.0 && rating <=7.0 )
+				{
+					MovieName = "Movie: "+ MovieName + "\n" + "Rating: Decent ("+ rating + ")\n" + "Plot: " + jsonResponse.getString("plot");
+				}
+				else if( rating >= 7.0 && rating <=10.0 )
+				{
+					MovieName = "Movie: "+ MovieName + "\n" + "Rating: Good ("+ rating + ")\n" + "Plot: " + jsonResponse.getString("plot");	  
+				}
+				else if(rating == 10.0){
+					MovieName = "Movie: "+ MovieName + "\n" + "Rating: Awesome ("+ rating + ")\n" + "Plot: " + jsonResponse.getString("plot");	  
+				}
+
 			}
 			return  MovieName;
+
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
 		return MovieName;
-	
+
 	}
 }
