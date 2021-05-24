@@ -20,13 +20,8 @@ class JSONDictionaryTest {
 	
 	@Test
 	void missingParameters() throws JSONException {
-		ArrayList<String> arrayDictionary = new ArrayList<String>();
-		arrayDictionary.addAll(logic.getDefinition(""));
-		if (arrayDictionary.size() == 0 )
-			System.out.println("\n"+"Missing Parameter" );
-		else 
-			System.out.println("\n"+"missingParameters test Case"+arrayDictionary.toString());
-	}
+		System.out.println(logic.getDefinition(""));
+		}
 	
 	@Test
 	void missingAuthenticationHeaders() throws JSONException, IOException

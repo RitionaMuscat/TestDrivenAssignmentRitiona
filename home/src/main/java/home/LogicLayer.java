@@ -18,45 +18,54 @@ public class LogicLayer {
 	public String getCurrencyConversion(String baseCurrency, String CurrencyToGetRate, double amountToConvert) {
 		double rate = 0;
 		double ConversionAmountTotal = 0;
-		try {
-			String json = dataLayer.getCurrencyConversion(baseCurrency);
-			JSONObject jsonResponse = new JSONObject(json);
-			JSONObject hits = jsonResponse.getJSONObject("rates");
+		String returnedValues = "";
+		if (baseCurrency != "" && CurrencyToGetRate == "" && amountToConvert != 0) {
+			try {
+				String json = dataLayer.getCurrencyConversion(baseCurrency);
+				JSONObject jsonResponse = new JSONObject(json);
+				JSONObject hits = jsonResponse.getJSONObject("rates");
 
-			for (int i = 0; i < hits.length(); i++) {
-				Double coversionRate = hits.getDouble(CurrencyToGetRate);
-				rate = coversionRate;
+				for (int i = 0; i < hits.length(); i++) {
+					Double coversionRate = hits.getDouble(CurrencyToGetRate);
+					rate = coversionRate;
+				}
+				ConversionAmountTotal = amountToConvert * rate;
+				returnedValues = baseCurrency + amountToConvert + " converts to " + CurrencyToGetRate + " "
+						+ ConversionAmountTotal + " today";
+				return returnedValues;
+			} catch (IOException e) {
+				System.err.println(e.getMessage());
+				return "-1";
 			}
-			ConversionAmountTotal = amountToConvert * rate;
-			return baseCurrency + amountToConvert + " converts to " + CurrencyToGetRate + " " + ConversionAmountTotal
-					+ " today";
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			return "-1";
+		} else {
+			return "Values cannot be null";
 		}
 	}
 
 	public List<String> getDefinition(String term) {
 		List<String> _Termlist = new ArrayList<String>();
-		if(term != null)
-		{
-		try {
-			String json = dataLayer.getJsonDictionary(term);
-			JSONObject jsonResponse = new JSONObject(json);
-			JSONArray hits = jsonResponse.getJSONArray("list");
+		if (term != null) {
+			try {
+				String json = dataLayer.getJsonDictionary(term);
+				if (json != "") {
+					JSONObject jsonResponse = new JSONObject(json);
+					JSONArray hits = jsonResponse.getJSONArray("list");
 
-			for (int i = 0; i < hits.length(); i++) {
-				JSONObject hit = hits.getJSONObject(i);
-				_Termlist.add(hit.getString("word"));
-				_Termlist.add(hit.getString("definition"));
-				_Termlist.add("\n");
+					for (int i = 0; i < hits.length(); i++) {
+						JSONObject hit = hits.getJSONObject(i);
+						_Termlist.add(hit.getString("word"));
+						_Termlist.add(hit.getString("definition"));
+						_Termlist.add("\n");
+					}
+
+					return _Termlist;
+				} else {
+					System.out.println("Term was not found");
+				}
+			} catch (IOException e) {
+				System.err.println(e.getMessage());
 			}
-			return _Termlist;
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-		}
-		}
-		else {
+		} else {
 			System.out.println("Word Is not defined");
 		}
 		return _Termlist;

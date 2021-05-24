@@ -23,34 +23,7 @@ class JsonCurrency {
 	
 	@Test
 	void missingParameters() throws JSONException, IOException {
-		double rate = 0;
-
-			String json = dataLayer.getCurrencyConversion(baseCurrency);
-			if(json == "")
-			{
-				System.out.println("Value Should not be null");
-			}
-			else
-			{
-				JSONObject jsonResponse = new JSONObject(json);
-				JSONObject hits = jsonResponse.getJSONObject("rates");
-
-				for (int i = 0; i < hits.length(); i++) {
-					Double coversionRate = hits.getDouble(CurrencyToGetRate);
-					rate = coversionRate;
-				}
-				if(amountToConvert == 0.00 || amountToConvert == null)
-				{
-					System.out.println("Value Should not be empty or 0");		
-				}
-				else
-				{
-					double ConversionAmountTotal = amountToConvert * rate;
-					System.out.println(baseCurrency+amountToConvert+" converts to "+CurrencyToGetRate+" " +ConversionAmountTotal+" today");
-				}
-			}
-
-			
+		logic.getCurrencyConversion(baseCurrency, "", 0);
 	}
 	
 	@Test
@@ -94,7 +67,7 @@ class JsonCurrency {
 	
 	@Test
 	void invalidParameters() throws Exception {
-		String Conversion = logic.getCurrencyConversion(baseCurrency, CurrencyToGetRate, amountToConvert);
+		logic.getCurrencyConversion("!", CurrencyToGetRate, amountToConvert);
 		if (amountToConvert == 0.00 || baseCurrency == "" || baseCurrency == "" )
 			System.out.println("\n"+"Invalid Parameters, amount should not be 0" );
 		else
