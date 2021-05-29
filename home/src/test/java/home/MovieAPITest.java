@@ -19,14 +19,8 @@ class MovieAPITest {
 	void missingParameters() throws NullPointerException {
 		ArrayList<String> arrayMovie = new ArrayList<String>();
 		logic.getMovie(movieName);
-//		
-//		arrayMovie.add(logic.getMovie(movieName));
-//		if (arrayMovie.size() == 0 )
-//			System.out.println("\n"+"Missing Parameter, Movie Name" );
-//		System.out.println("\n"+"missingParameters "+arrayMovie.toString());
-//	}
-	
 	}
+	
 	@Test
 	void missingAuthenticationHeaders() throws JSONException, IOException
 	{

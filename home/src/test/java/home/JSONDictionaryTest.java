@@ -21,7 +21,7 @@ class JSONDictionaryTest {
 	@Test
 	void missingParameters() throws JSONException {
 		System.out.println(logic.getDefinition(""));
-		}
+	}
 	
 	@Test
 	void missingAuthenticationHeaders() throws JSONException, IOException

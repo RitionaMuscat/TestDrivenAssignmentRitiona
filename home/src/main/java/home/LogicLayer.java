@@ -19,7 +19,7 @@ public class LogicLayer {
 		double rate = 0;
 		double ConversionAmountTotal = 0;
 		String returnedValues = "";
-		if (baseCurrency != "" && CurrencyToGetRate == "" && amountToConvert != 0) {
+		if (baseCurrency != "" && CurrencyToGetRate != "" && amountToConvert != 0) {
 			try {
 				String json = dataLayer.getCurrencyConversion(baseCurrency);
 				JSONObject jsonResponse = new JSONObject(json);
@@ -72,7 +72,7 @@ public class LogicLayer {
 	}
 
 	public String getMovie(String movieName) {
-		if (movieName != null) {
+		if (movieName != null || movieName != "") {
 			String MovieName = "";
 			double rating = 0;
 			try {
