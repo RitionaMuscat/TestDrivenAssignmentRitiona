@@ -1,17 +1,14 @@
 package home;
 
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import io.restassured.RestAssured;
 
 class JsonCurrency {
 
@@ -20,63 +17,82 @@ class JsonCurrency {
 	Double amountToConvert = 11.20;
 	String baseCurrency = "EUR";
 	String CurrencyToGetRate = "GBP";
-	
+
+	@BeforeAll
+	static void setup() {
+		RestAssured.baseURI = SetupConstants.CURR_URL;
+
+	}
+
 	@Test
 	void missingParameters() throws JSONException, IOException {
-		logic.getCurrencyConversion(baseCurrency, "", 0);
-	}
-	
-	@Test
-	void missingAuthenticationHeaders() throws JSONException, IOException
-	{
-		OkHttpClient client = new OkHttpClient();
+		io.restassured.response.Response res = given()
+				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.header("x-rapidapi-host", "exchangerate-api.p.rapidapi.com").when().get(RestAssured.baseURI).then()
+				.assertThat().extract().response();
 
-		Request request = new Request.Builder()
-				.url("https://exchangerate-api.p.rapidapi.com/rapid/latest/"+baseCurrency)
-				.get()
-				//.addHeader("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
-				.addHeader("x-rapidapi-host", "exchangerate-api.p.rapidapi.com")
-				.build();
-		Response response = client.newCall(request).execute();
-		String missingAPIKey = "Missing API Key";
-		
-		if(response.code() == 401)
-			System.out.println("\n"+"missingAuthenticationHeaders " + missingAPIKey);
-		else
-			System.out.println("\n"+"missingAuthenticationHeaders " + response.body().string());
+		if (res.getStatusCode() != 200) {
+			System.out.println("missingParameters: BaseCurrency Not Provided not provided \n");
+		} else {
+			System.out.println(res.body().asString() + "\n");
+		}
 	}
-	
-	@Test
-	void invalidKey() throws JSONException, IOException
-	{
-		OkHttpClient client = new OkHttpClient();
 
-		Request request = new Request.Builder()
-				.url("https://exchangerate-api.p.rapidapi.com/rapid/latest/"+baseCurrency)
-				.get()
-				.addHeader("x-rapidapi-key","EUR" /*"ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348"*/)
-				.addHeader("x-rapidapi-host", "exchangerate-api.p.rapidapi.com")
-				.build();
-		Response response = client.newCall(request).execute();
-	
-		if(response.code() == 401)
-			System.out.println("Invalid Key");
-		else
-			System.out.println("Invalid Key " + response.body().string());
-	}
-	
 	@Test
-	void invalidParameters() throws Exception {
-		logic.getCurrencyConversion("!", CurrencyToGetRate, amountToConvert);
-		if (amountToConvert == 0.00 || baseCurrency == "" || baseCurrency == "" )
-			System.out.println("\n"+"Invalid Parameters, amount should not be 0" );
-		else
-			System.out.println("\n"+"invalidParameters "+amountToConvert);
+	void missingAuthenticationHeaders() throws JSONException, IOException {
+		io.restassured.response.Response res = given()
+				// .header("x-rapidapi-key",
+				// "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.header("x-rapidapi-host", "exchangerate-api.p.rapidapi.com").when()
+				.get(RestAssured.baseURI + baseCurrency).then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("missingAuthenticationHeaders: Missing Headders \n");
+		} else {
+			System.out.println("missingAuthenticationHeaders: " + res.body().asString() + "\n");
+		}
 	}
-	
+
 	@Test
-	void getConvertedAmount() throws Exception {
-		logic.getCurrencyConversion(baseCurrency, CurrencyToGetRate, amountToConvert);
+	void invalidKey() throws JSONException, IOException {
+		io.restassured.response.Response res = given()
+				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp130jsnd361f3ac8348")
+				.header("x-rapidapi-host", "exchangerate-api.p.rapidapi.com").when()
+				.get(RestAssured.baseURI + baseCurrency).then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("invalidKey: Key Is Wrong \n");
+		} else {
+			System.out.println("missingAuthenticationHeaders: " + res.body().asString() + "\n");
+		}
+	}
+
+	@Test
+	void invalidParameters() throws JSONException, IOException {
+		io.restassured.response.Response res = given()
+				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.header("x-rapidapi-host", "exchangerate-api.p.rapidapi.com").when().get(RestAssured.baseURI + null)
+				.then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("invalidParameters: Parameter Cannot Be Empty \n");
+		} else {
+			System.out.println("invalidParameters: " + res.body().asString() + "\n");
+		}
+	}
+
+	@Test
+	void getConvertedAmount() throws JSONException, IOException {
+		io.restassured.response.Response res = given()
+				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.header("x-rapidapi-host", "exchangerate-api.p.rapidapi.com").when().get(RestAssured.baseURI + null)
+				.then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("getConvertedAmount: error \n");
+		} else {
+			System.out.println("getConvertedAmount: " + res.body().asString() + "\n");
+		}
 	}
 
 }

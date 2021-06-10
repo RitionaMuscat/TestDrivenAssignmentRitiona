@@ -1,13 +1,16 @@
 package home;
 
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import io.restassured.RestAssured;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -17,72 +20,92 @@ class JSONDictionaryTest {
 	DataLayer dataLayer = new DataLayer();
 	LogicLayer logic = new LogicLayer(dataLayer);
 	String word = "Who";
-	
-	@Test
-	void missingParameters() throws JSONException {
-		System.out.println(logic.getDefinition(""));
-	}
-	
-	@Test
-	void missingAuthenticationHeaders() throws JSONException, IOException
-	{
-		OkHttpClient client = new OkHttpClient();
 
-		Request request = new Request.Builder()
-				.url("https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=Who")	
-				.get()
-				//.addHeader("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
-				.addHeader("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com")
-				.build();
+	@BeforeAll
+	static void setup() {
+		RestAssured.baseURI = SetupConstants.DICT_URL;
 
-		Response response = client.newCall(request).execute();
-		String missingAPIKey = "Missing API Key";
-		
-		if(response.code() == 401)
-			System.out.println("\n"+"missingAuthenticationHeaders " + missingAPIKey);
-		else
-			System.out.println("\n"+"missingAuthenticationHeaders " + response.body().string());
 	}
-	
-	@Test
-	void invalidKey() throws JSONException, IOException
-	{
-		OkHttpClient client = new OkHttpClient();
 
-		Request request = new Request.Builder()
-				.url("https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=Who")	
-				.get()
-				.addHeader("x-rapidapi-key", "1234"/* "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348"*/)
-				.addHeader("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com")
-				.build();
+	@Test
+	void missingParameters() throws IOException {
 
-		Response response = client.newCall(request).execute();
-	
-		if(response.code() == 401)
-			System.out.println("Invalid Key");
-		else
-			System.out.println("Invalid Key " + response.body().string());
+		io.restassured.response.Response res = given()
+				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
+				.get(RestAssured.baseURI + word).then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("missingParameters: Term to search not provided \n");
+		} else {
+			System.out.println(res.body().asString() + "\n");
+		}
+
 	}
-	
+
 	@Test
-	void invalidParameters() throws Exception {
-		ArrayList<String> arrayDictionary = new ArrayList<String>();
-		Integer wordInNumeric = 123 ;
-		arrayDictionary.addAll(logic.getDefinition(wordInNumeric.toString()));
-		if (arrayDictionary.size() == 0 )
-			System.out.println("\n"+"Invalid Parameters, word should be in string" );
-		else
-			System.out.println("\n"+"invalidParameters "+arrayDictionary.toString());
+	void missingAuthenticationHeaders() throws IOException {
+
+		io.restassured.response.Response res = given()
+				// .header("x-rapidapi-key",
+				// "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
+				.get(RestAssured.baseURI + word).then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("missingAuthenticationHeaders: Authentication Header Missing \n");
+		} else {
+			System.out.println(res.body().asString() + "\n");
+		}
+
 	}
-	
+
 	@Test
-	void getDefinition() throws Exception {
-		ArrayList<String> arrayDictionary = new ArrayList<String>();
-		arrayDictionary.addAll(logic.getDefinition(word.toString()));
-		if (arrayDictionary.size() == 0 )
-			System.out.println("\n"+"No word" );
-		else
-			System.out.println("\n"+"getDefinition "+arrayDictionary.toString());
+	void invalidKey() throws IOException {
+
+		io.restassured.response.Response res = given()
+				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8")
+				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
+				.get(RestAssured.baseURI + word).then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("invalidKey: Key Is not Correct \n");
+		} else {
+			System.out.println(res.body().asString() + "\n");
+		}
+
+	}
+
+	@Test
+	void invalidParameters() throws IOException {
+
+		io.restassured.response.Response res = given()
+				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
+				.get(RestAssured.baseURI + null).then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("Invalid Parameter \n");
+		} else {
+			System.out.println(res.body().asString() + "\n");
+		}
+
+	}
+
+	@Test
+	void getDefinition() throws IOException {
+
+		io.restassured.response.Response res = given()
+				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
+				.get(RestAssured.baseURI + word).then().assertThat().extract().response();
+
+		if (res.getStatusCode() != 200) {
+			System.out.println("getDefinition failed \n");
+		} else {
+			System.out.println(res.body().asString() + "\n");
+		}
+
 	}
 
 }
