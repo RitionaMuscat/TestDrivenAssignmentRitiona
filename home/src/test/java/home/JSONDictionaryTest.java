@@ -30,81 +30,54 @@ class JSONDictionaryTest {
 	@Test
 	void missingParameters() throws IOException {
 
-		io.restassured.response.Response res = given()
+	given()
 				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + word).then().assertThat().extract().response();
+				.get(RestAssured.baseURI).then().assertThat().statusCode(SetupConstants.HTTP_SERVER_ERROR);
 
-		if (res.getStatusCode() != 200) {
-			System.out.println("missingParameters: Term to search not provided \n");
-		} else {
-			System.out.println(res.body().asString() + "\n");
-		}
+
 
 	}
 
 	@Test
 	void missingAuthenticationHeaders() throws IOException {
 
-		io.restassured.response.Response res = given()
+		 given()
 				// .header("x-rapidapi-key",
 				// "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + word).then().assertThat().extract().response();
-
-		if (res.getStatusCode() != 200) {
-			System.out.println("missingAuthenticationHeaders: Authentication Header Missing \n");
-		} else {
-			System.out.println(res.body().asString() + "\n");
-		}
+				.get(RestAssured.baseURI + word).then().assertThat().statusCode(SetupConstants.HTTP_UNATHORIZED);
 
 	}
 
 	@Test
 	void invalidKey() throws IOException {
 
-		io.restassured.response.Response res = given()
+		given()
 				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + word).then().assertThat().extract().response();
-
-		if (res.getStatusCode() != 200) {
-			System.out.println("invalidKey: Key Is not Correct \n");
-		} else {
-			System.out.println(res.body().asString() + "\n");
-		}
+				.get(RestAssured.baseURI + word).then().assertThat().statusCode(SetupConstants.HTTP_FORBIDDEN);
 
 	}
 
 	@Test
 	void invalidParameters() throws IOException {
 
-		io.restassured.response.Response res = given()
+		 given()
 				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + null).then().assertThat().extract().response();
-
-		if (res.getStatusCode() != 200) {
-			System.out.println("Invalid Parameter \n");
-		} else {
-			System.out.println(res.body().asString() + "\n");
-		}
+				.get(RestAssured.baseURI + "").then().assertThat().statusCode(SetupConstants.HTTP_SERVER_ERROR);
 
 	}
 
 	@Test
 	void getDefinition() throws IOException {
 
-		io.restassured.response.Response res = given()
+		given()
 				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + word).then().assertThat().extract().response();
+				.get(RestAssured.baseURI + word).then().assertThat().statusCode(SetupConstants.HTTP_OK);
 
-		if (res.getStatusCode() != 200) {
-			System.out.println("getDefinition failed \n");
-		} else {
-			System.out.println(res.body().asString() + "\n");
-		}
 
 	}
 

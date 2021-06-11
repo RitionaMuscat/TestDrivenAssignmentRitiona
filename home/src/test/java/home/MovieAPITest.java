@@ -32,80 +32,40 @@ class MovieAPITest {
 	@Test
 	void missingParameters() throws IOException {
 
-		io.restassured.response.Response res = given()
-				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+		given().header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "imdb-internet-movie-database-unofficial.p.rapidapi.com").when()
-				.get(RestAssured.baseURI).then().assertThat()
-				.extract().response();
-
-		if (res.getStatusCode() != 200) {
-			System.out.println("missingParameters: Film not provided \n");
-		} else {
-			System.out.println(res.body().asString() + "\n");
-		}
-
+				.get(RestAssured.baseURI).then().assertThat().statusCode(SetupConstants.HTTP_NOT_FOUND);
 	}
 
 	@Test
 	void missingAuthenticationHeaders() throws IOException {
-		io.restassured.response.Response res = given()
+		given()
 				// .header("x-rapidapi-key",
 				// "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "imdb-internet-movie-database-unofficial.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + movieName).then()
-				.assertThat().extract().response();
-		if (res.getStatusCode() == 401) {
-			System.out.println("missingAuthenticationHeaders: Missing Authentication Headers \n");
-		} else {
-			System.out.println("missingAuthenticationHeaders: " + res.body().asString());
-		}
-
+				.get(RestAssured.baseURI + movieName).then().assertThat().statusCode(SetupConstants.HTTP_UNATHORIZED);
 	}
 
 	@Test
 	void invalidKey() throws JSONException, IOException {
-		io.restassured.response.Response res = given()
-				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8")
+		given().header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8")
 				.header("x-rapidapi-host", "imdb-internet-movie-database-unofficial.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + movieName).then()
-				.assertThat().extract().response();
-		if (res.getStatusCode() != 200) {
-			System.out.println("invalidKey: Invalid Key - " + res.getStatusCode() + "\n");
-		} else {
-			System.out.println("invalidKey: " + res.body().asString());
-		}
+				.get(RestAssured.baseURI + movieName).then().assertThat().statusCode(SetupConstants.HTTP_FORBIDDEN);
 	}
 
 	@Test
 	void invalidParameters() throws IOException {
 
-		io.restassured.response.Response res = given()
-				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+		given().header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "imdb-internet-movie-database-unofficial.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + null).then().assertThat()
-				.extract().response();
-
-		if (res.getStatusCode() != 200) {
-			System.out.println("invalidParameters: Film not provided \n");
-		} else {
-			System.out.println("invalidParameters: " + res.body().asString() + "\n");
-		}
-
+				.get(RestAssured.baseURI + "//u00a0").then().assertThat().statusCode(SetupConstants.HTTP_NOT_FOUND);
 	}
 
 	@Test
 	void getMovie() throws IOException {
-		io.restassured.response.Response res = given()
-				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+		given().header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "imdb-internet-movie-database-unofficial.p.rapidapi.com").when()
-				.get(RestAssured.baseURI + null).then().assertThat()
-				.extract().response();
-
-		if (res.getStatusCode() != 200) {
-			System.out.println("getMovie: Invalid Request \n");
-		} else {
-			System.out.println("getMovie: " + res.body().asString() + "\n");
-		}
+				.get(RestAssured.baseURI + movieName).then().assertThat().statusCode(SetupConstants.HTTP_OK);
 	}
 
 }
