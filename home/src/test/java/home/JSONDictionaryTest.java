@@ -30,19 +30,15 @@ class JSONDictionaryTest {
 	@Test
 	void missingParameters() throws IOException {
 
-	given()
-				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+		given().header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
 				.get(RestAssured.baseURI).then().assertThat().statusCode(SetupConstants.HTTP_SERVER_ERROR);
-
-
 
 	}
 
 	@Test
 	void missingAuthenticationHeaders() throws IOException {
-
-		 given()
+		given()
 				// .header("x-rapidapi-key",
 				// "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
@@ -52,33 +48,23 @@ class JSONDictionaryTest {
 
 	@Test
 	void invalidKey() throws IOException {
-
-		given()
-				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8")
+		given().header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
 				.get(RestAssured.baseURI + word).then().assertThat().statusCode(SetupConstants.HTTP_FORBIDDEN);
-
 	}
 
 	@Test
 	void invalidParameters() throws IOException {
-
-		 given()
-				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+		given().header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
 				.get(RestAssured.baseURI + "").then().assertThat().statusCode(SetupConstants.HTTP_SERVER_ERROR);
-
 	}
 
 	@Test
 	void getDefinition() throws IOException {
-
-		given()
-				.header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+		given().header("x-rapidapi-key", "ff143ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
 				.header("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").when()
 				.get(RestAssured.baseURI + word).then().assertThat().statusCode(SetupConstants.HTTP_OK);
-
-
 	}
 
 }
