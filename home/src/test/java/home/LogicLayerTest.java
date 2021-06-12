@@ -1,6 +1,6 @@
 package home;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,36 +9,64 @@ class LogicLayerTest {
 	DataLayer dataLayer = new DataLayer();
 	LogicLayer logic = new LogicLayer(dataLayer);
 	
-	String baseCurrency = "EUR", currencyToConvertTo = "GBP",word = "apple",movieName = "friends";	
+
 	Double amount = 50.00;
+	ArrayList<String> movieNames = new ArrayList<String>();
+	ArrayList<String> words = new ArrayList<String>();
+	ArrayList<String> baseCurrency = new ArrayList<String>();
+	ArrayList<String> currencyToConvertTo = new ArrayList<String>();
 	@Test
 	void movieTest() {
-		System.out.println(logic.getMovie(movieName));
-		System.out.println(logic.getMovie(""));
-		System.out.println(logic.getMovie("Fear the Walking Dead"));
-		System.out.println(logic.getMovie("Black Money Love"));
-		System.out.println(logic.getMovie("Breaking Bad"));
-		System.out.println(logic.getMovie("The Flash"));
-		System.out.println(logic.getMovie(null));
-		System.out.println(logic.getMovie("Disaster Movie"));
+		movieNames.add("friends");
+		movieNames.add("");
+		movieNames.add("Fear the Walking Dead");
+		movieNames.add("Black Money Love");
+		movieNames.add("Breaking Bad");
+		movieNames.add("The Flash");
+		movieNames.add(null);
+		movieNames.add("Disaster Movie");
+		
+		for (int i = 0; i < movieNames.size(); i++)
+		{
+			System.out.println(logic.getMovie(movieNames.get(i)));
+		}
+
 	}
 
 	@Test 
 	void jsonDictionaryTest(){
-		System.out.println(logic.getDefinition(word));
+		words.add("pencil");
+		words.add("biro");
+		words.add("chicken leg");
+		for(int j = 0; j < words.size(); j ++)
+		{
+			System.out.println(logic.getDefinition(words.get(j)));
+		}
+		System.out.println(logic.getDefinition("apple"));
 		System.out.println(logic.getDefinition("--"));
 		System.out.println(logic.getDefinition(""));
 	}
 	
 	@Test 
 	void jsonCurrencyConversion(){
-		System.out.println(logic.getCurrencyConversion(baseCurrency,currencyToConvertTo,amount));
-		System.out.println(logic.getCurrencyConversion(baseCurrency,currencyToConvertTo,0));
-		System.out.println(logic.getCurrencyConversion(baseCurrency,currencyToConvertTo,0));
-		System.out.println(logic.getCurrencyConversion(baseCurrency,null,0));
-		System.out.println(logic.getCurrencyConversion("",null,0));
-		System.out.println(logic.getCurrencyConversion(null,null,0));
-		System.out.println(logic.getCurrencyConversion("","",0));
+		baseCurrency.add("GBP");
+		baseCurrency.add("USD");
+		baseCurrency.add("EUR");
+		baseCurrency.add("CAD");
+		baseCurrency.add("");
+		baseCurrency.add(null);
+		currencyToConvertTo.add("NZD");
+		currencyToConvertTo.add("BRL");
+		currencyToConvertTo.add("AUD");
+		currencyToConvertTo.add("INR");
+		currencyToConvertTo.add("");
+		currencyToConvertTo.add(null);
+		for (int k = 0; k < baseCurrency.size(); k++)
+		{
+			System.out.println(logic.getCurrencyConversion(baseCurrency.get(k),currencyToConvertTo.get(k),amount));
+			
+		}
+
 	}
 
 }

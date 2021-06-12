@@ -19,9 +19,12 @@ public class LogicLayer {
 		double rate = 0, ConversionAmountTotal = 0;
 		String returnedValues = "";
 
-		if (baseCurrency != null && CurrencyToGetRate != null && amountToConvert != 0) {
-			try {
-				String json = dataLayer.getCurrencyConversion(baseCurrency);
+		try {
+
+			String json = dataLayer.getCurrencyConversion(baseCurrency);
+			if (json.contains("does not exist")) {
+				System.out.println("Currency Cannot Be Null");
+			} else {
 				JSONObject jsonResponse = new JSONObject(json);
 				JSONObject hits = jsonResponse.getJSONObject("rates");
 
@@ -33,13 +36,13 @@ public class LogicLayer {
 				returnedValues = baseCurrency + amountToConvert + " converts to " + CurrencyToGetRate + " "
 						+ ConversionAmountTotal + " today";
 				return returnedValues;
-			} catch (Exception e) {
-				System.err.println(e.getMessage());
-				return "-1";
 			}
-		} else {
-			return "Values cannot be null";
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return "-1";
 		}
+		return returnedValues;
 	}
 
 	public List<String> getDefinition(String term) {
@@ -84,13 +87,13 @@ public class LogicLayer {
 						MovieName = jsonResponse.getString("title");
 						rating = jsonResponse.getDouble("rating");
 
-						if (rating <= 4.0) {
+						if (rating < 4.0) {
 							MovieName = "Movie: " + MovieName + "\n" + "Rating: Bad (" + rating + ")\n" + "Plot: "
 									+ jsonResponse.getString("plot");
-						} else if (rating > 4.0 && rating <= 7.0) {
+						} else if (rating > 4.0 && rating < 7.0) {
 							MovieName = "Movie: " + MovieName + "\n" + "Rating: Decent (" + rating + ")\n" + "Plot: "
 									+ jsonResponse.getString("plot");
-						} else if (rating > 7.0 && rating <= 10.0) {
+						} else if (rating > 7.0 && rating < 10.0) {
 							MovieName = "Movie: " + MovieName + "\n" + "Rating: Good (" + rating + ")\n" + "Plot: "
 									+ jsonResponse.getString("plot");
 						} else if (rating == 10.0) {
@@ -105,8 +108,11 @@ public class LogicLayer {
 				System.err.println(e.getMessage());
 			}
 		} else {
-			return "Movie Name Cannot Be Null!!";
+			return "Movie Name Cannot Be Null!! No details returned";
 		}
-		return MovieName;
+		if (MovieName != "")
+			return MovieName;
+		else
+			return "No details returned";
 	}
 }
