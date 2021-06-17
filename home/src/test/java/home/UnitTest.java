@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-class LogicLayerTest {
+class UnitTest {
 
 	DataLayer dataLayer = new DataLayer();
 	LogicLayer logic = new LogicLayer(dataLayer);
