@@ -47,7 +47,6 @@ public class LogicLayer {
 
 	public List<String> getDefinition(String term) {
 		List<String> _Termlist = new ArrayList<String>();
-		System.out.println(term.contains("--"));
 
 		try {
 			if (term.length() != 0 && term.contains("--") == false) {
@@ -86,7 +85,8 @@ public class LogicLayer {
 					for (int i = 0; i < jsonResponse.length(); i++) {
 						MovieName = jsonResponse.getString("title");
 						rating = jsonResponse.getDouble("rating");
-
+					 if (rating != 0.0 || Double.toString(rating) != "")
+					 {
 						if (rating < 4.0) {
 							MovieName = "Movie: " + MovieName + "\n" + "Rating: Bad (" + rating + ")\n" + "Plot: "
 									+ jsonResponse.getString("plot");
@@ -100,12 +100,19 @@ public class LogicLayer {
 							MovieName = "Movie: " + MovieName + "\n" + "Rating: Awesome (" + rating + ")\n" + "Plot: "
 									+ jsonResponse.getString("plot");
 						}
+					 }
+					 else {
+						 System.out.println("Rating is null");
+					 }
 					}
 				} else {
 					return "Movie Name is Empty";
 				}
 			} catch (IOException e) {
 				System.err.println(e.getMessage());
+			} catch (JSONException ex)
+			{
+				System.err.println(ex.getMessage());
 			}
 		} else {
 			return "Movie Name Cannot Be Null!! No details returned";
