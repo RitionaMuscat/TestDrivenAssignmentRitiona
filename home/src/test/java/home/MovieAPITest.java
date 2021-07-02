@@ -19,8 +19,8 @@ import static io.restassured.RestAssured.*;
 
 class MovieAPITest {
 
-	DataLayer dataLayer = new DataLayer();
-	LogicLayer logic = new LogicLayer(dataLayer);
+	MovieDataLayer dataLayer = new MovieDataLayer();
+	MovieLogicLayer logic = new MovieLogicLayer(dataLayer);
 	String movieName = "friends";
 
 	@BeforeAll

@@ -24,7 +24,7 @@ public class MovieLogicLayer {
 					for (int i = 0; i < jsonResponse.length(); i++) {
 						MovieName = jsonResponse.getString("title");
 						rating = jsonResponse.getDouble("rating");
-					 if (rating != 0.0 || Double.toString(rating) != "")
+					 if ( Double.toString(rating) != "")
 					 {
 						if (rating < 4.0) {
 							MovieName = "Movie: " + MovieName + "\n" + "Rating: Bad (" + rating + ")\n" + "Plot: "
@@ -40,9 +40,7 @@ public class MovieLogicLayer {
 									+ jsonResponse.getString("plot");
 						}
 					 }
-					 else {
-						 System.out.println("Rating is null");
-					 }
+
 					}
 				} else {
 					return "Movie Name is Empty";
@@ -56,9 +54,8 @@ public class MovieLogicLayer {
 		} else {
 			return "Movie Name Cannot Be Null!! No details returned";
 		}
-		if (MovieName != "")
+
 			return MovieName;
-		else
-			return "No details returned";
+	
 	}
 }

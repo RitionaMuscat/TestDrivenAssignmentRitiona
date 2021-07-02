@@ -12,8 +12,8 @@ import io.restassured.RestAssured;
 
 class JsonCurrency {
 
-	DataLayer dataLayer = new DataLayer();
-	LogicLayer logic = new LogicLayer(dataLayer);
+	CurrencyDataLayer dataLayer = new CurrencyDataLayer();
+	CurrencyLogicLayer logic = new CurrencyLogicLayer(dataLayer);
 	Double amountToConvert = 11.20;
 	String baseCurrency = "EUR";
 	String CurrencyToGetRate = "GBP";

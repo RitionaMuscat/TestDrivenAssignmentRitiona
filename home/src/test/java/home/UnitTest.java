@@ -6,8 +6,14 @@ import org.junit.jupiter.api.Test;
 
 class UnitTest {
 
-	DataLayer dataLayer = new DataLayer();
-	LogicLayer logic = new LogicLayer(dataLayer);
+	MovieDataLayer data = new MovieDataLayer();
+	MovieLogicLayer logic = new MovieLogicLayer(data);
+	
+	CurrencyDataLayer data1 = new CurrencyDataLayer();
+	CurrencyLogicLayer logic2 = new CurrencyLogicLayer(data1);
+	
+	DictionaryDataLayer data2 = new DictionaryDataLayer();
+	DictionaryLogicLayer logic3 = new DictionaryLogicLayer(data2);
 	
 
 	Double amount = 50.00;
@@ -40,11 +46,11 @@ class UnitTest {
 		words.add("chicken leg");
 		for(int j = 0; j < words.size(); j ++)
 		{
-			System.out.println(logic.getDefinition(words.get(j)));
+			System.out.println(logic3.getDefinition(words.get(j)));
 		}
-		System.out.println(logic.getDefinition("apple"));
-		System.out.println(logic.getDefinition("--"));
-		System.out.println(logic.getDefinition(""));
+		System.out.println(logic3.getDefinition("apple"));
+		System.out.println(logic3.getDefinition("--"));
+		System.out.println(logic3.getDefinition(""));
 	}
 	
 	@Test 
@@ -63,7 +69,7 @@ class UnitTest {
 		currencyToConvertTo.add(null);
 		for (int k = 0; k < baseCurrency.size(); k++)
 		{
-			System.out.println(logic.getCurrencyConversion(baseCurrency.get(k),currencyToConvertTo.get(k),amount));
+			System.out.println(logic2.getCurrencyConversion(baseCurrency.get(k),currencyToConvertTo.get(k),amount));
 			
 		}
 

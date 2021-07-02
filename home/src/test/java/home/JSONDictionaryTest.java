@@ -17,8 +17,8 @@ import okhttp3.Response;
 
 class JSONDictionaryTest {
 
-	DataLayer dataLayer = new DataLayer();
-	LogicLayer logic = new LogicLayer(dataLayer);
+	DictionaryDataLayer dataLayer = new DictionaryDataLayer();
+	DictionaryLogicLayer logic = new DictionaryLogicLayer(dataLayer);
 	String word = "Who";
 
 	@BeforeAll
