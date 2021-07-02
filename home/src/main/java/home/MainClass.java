@@ -5,17 +5,28 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
-	static DataLayer data = new DataLayer();
-	static LogicLayer logic = new LogicLayer(data);
+public class MainClass {
+
+	
+	static MovieDataLayer data = new MovieDataLayer();
+	static DictionaryDataLayer data_1 = new DictionaryDataLayer();
+	static CurrencyDataLayer data_2 = new CurrencyDataLayer();
+	
+	static CurrencyLogicLayer logic = new CurrencyLogicLayer(data_2);
+	static DictionaryLogicLayer logic_1 = new DictionaryLogicLayer(data_1);
+	static MovieLogicLayer logic_2 = new MovieLogicLayer(data);
+
 	static Scanner sc = new Scanner(System.in);
 	static int i = 0;
+	
 	public static void main(String[] args) throws IOException {
 		Menu();
+		
 	}
 
+
 	public static String getStringMovie(String input) throws IOException {
-		return logic.getMovie(input);
+		return logic_2.getMovie(input);
 	}
 
 	public static String getJsonCurrency(Double amount, String currencyFrom, String currencyTo) {
@@ -23,10 +34,11 @@ public class Main {
 	}
 
 	public static List<String> getJsonDefinition(String word) {
-		return logic.getDefinition(word);
+		return logic_1.getDefinition(word);
 	}
 
 	public static void Menu() throws IOException {
+		
 		try {
 			do {
 				System.out.print("Choose From The Below To Get Data From: \n");
