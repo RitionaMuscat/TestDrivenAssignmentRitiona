@@ -4,6 +4,13 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import home.CurrencyDataLayer;
+import home.CurrencyLogicLayer;
+import home.DictionaryDataLayer;
+import home.DictionaryLogicLayer;
+import home.MovieDataLayer;
+import home.MovieLogicLayer;
+
 class UnitTest {
 
 	MovieDataLayer data = new MovieDataLayer();
