@@ -27,16 +27,16 @@ public class MovieLogicLayer {
 					 if ( Double.toString(rating) != "")
 					 {
 						if (rating < 4.0) {
-							MovieName = "Movie: " + MovieName + "\n" + "Rating: Bad (" + rating + ")\n" + "Plot: "
+							MovieName = "Movie: " + MovieName + "Rating: Bad (" + rating + ")" + " Plot: "
 									+ jsonResponse.getString("plot");
 						} else if (rating > 4.0 && rating < 7.0) {
-							MovieName = "Movie: " + MovieName + "\n" + "Rating: Decent (" + rating + ")\n" + "Plot: "
+							MovieName = "Movie: " + MovieName + "Rating: Decent (" + rating + ")" + " Plot: "
 									+ jsonResponse.getString("plot");
 						} else if (rating > 7.0 && rating < 10.0) {
-							MovieName = "Movie: " + MovieName + "\n" + "Rating: Good (" + rating + ")\n" + "Plot: "
+							MovieName = "Movie: " + MovieName + "Rating: Good (" + rating + ")" + " Plot: "
 									+ jsonResponse.getString("plot");
 						} else if (rating == 10.0) {
-							MovieName = "Movie: " + MovieName + "\n" + "Rating: Awesome (" + rating + ")\n" + "Plot: "
+							MovieName = "Movie: " + MovieName + "Rating: Awesome (" + rating + ")" + " Plot: "
 									+ jsonResponse.getString("plot");
 						}
 					 }
@@ -46,10 +46,10 @@ public class MovieLogicLayer {
 					return "Movie Name is Empty";
 				}
 			} catch (IOException e) {
-				System.err.println(e.getMessage());
+				System.out.println(e.getMessage());
 			} catch (JSONException ex)
 			{
-				System.err.println(ex.getMessage());
+				System.out.println(ex.getMessage());
 			}
 		} else {
 			return "Movie Name Cannot Be Null!! No details returned";

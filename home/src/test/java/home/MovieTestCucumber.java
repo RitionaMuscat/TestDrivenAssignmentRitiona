@@ -9,10 +9,8 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(
 	strict = true, // undefined and pending steps should be treated as errors
 	monochrome = true, // simple output 
-	
-	dryRun = false,
-	features = "src/test/resources/movie.feature",
-	glue= {"StepsDefinitionMovies"}
+	dryRun=false,
+	features = "src/test/resources/movie.feature"
 )
 public class MovieTestCucumber {
 	

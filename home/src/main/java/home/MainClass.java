@@ -20,11 +20,10 @@ public class MainClass {
 
 	public static void main(String[] args)  {
 		try {
-
 			if (args.length != 0) {
 				System.out.println(getStringMovie(args[0]));
-				System.out.println(getJsonDefinition(args[4]));
-				System.out.println(getJsonCurrency(Double.parseDouble(args[1]), args[2], args[3]));
+//				System.out.println(getJsonDefinition(args[4]));
+//				System.out.println(getJsonCurrency(Double.parseDouble(args[3]), args[2], args[1]));
 
 			}
 
@@ -33,6 +32,9 @@ public class MainClass {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NullPointerException n)
+		{
+			System.out.println("Args is null: " + n.getMessage());
 		}
 
 	}
