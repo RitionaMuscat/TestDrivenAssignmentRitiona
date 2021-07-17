@@ -1,7 +1,7 @@
 Feature: MainClass
 Scenario: No currencies provided
   When I dont have any parameters passed
-  Then I check that the warning message is shown
+  Then I check that the warning is shown
 
 Scenario:  Authorized user is able to convert amounts
 	Given That The Conversion is available

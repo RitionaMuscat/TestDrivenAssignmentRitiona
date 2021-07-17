@@ -24,7 +24,7 @@ public class MainClass {
 
 				System.out.println(getStringMovie(args[0]));
 				System.out.println(getJsonDefinition(args[4]));
-//				System.out.println(getJsonCurrency(Double.parseDouble(args[3]), args[2], args[1]));
+				System.out.println(getJsonCurrency(Double.parseDouble(args[3]), args[2], args[1]));
 
 			}
 
