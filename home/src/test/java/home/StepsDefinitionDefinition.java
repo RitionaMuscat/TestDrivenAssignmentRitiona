@@ -1,81 +1,132 @@
 package home;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
 import java.util.List;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class StepsDefinitionDefinition {
 
+	OkHttpClient client = new OkHttpClient();
 
-//Failed scenarios:
-//file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:13# Jumbled Definition
-//file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:25# Multiple Movie Names
-//file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:35# Numeric and Symbol files
-//file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:40# Invalid Characters (percentages)
-//
-//Undefined scenarios:
-//file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:2# No word is provided
-//file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:6# Authorized user is able to find a definition
-//
-//7 Scenarios (4 failed, 2 undefined, 1 passed)
-//16 Steps (4 failed, 6 skipped, 4 undefined, 2 passed)
-//0m4.584s
-//
-//
-//java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 3
-//	at home.MainClass.main(MainClass.java:26)
-//	at home.StepsDefinitionMovies.i_input_jumbled_words(StepsDefinitionMovies.java:90)
-//	at ?.I input jumbled words(file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:14)
-//
-//java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 2
-//	at home.MainClass.main(MainClass.java:26)
-//	at home.StepsDefinitionMovies.i_search_for_movie_name(StepsDefinitionMovies.java:109)
-//	at ?.I search for movie name(file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:26)
-//
-//java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 1
-//	at home.MainClass.main(MainClass.java:26)
-//	at home.StepsDefinitionMovies.i_input_characters_and_symbols(StepsDefinitionMovies.java:144)
-//	at ?.I input characters and symbols(file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:36)
-//
-//java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 1
-//	at home.MainClass.main(MainClass.java:26)
-//	at home.StepsDefinitionMovies.i_enter_a_percentage_with_the_movie_name(StepsDefinitionMovies.java:156)
-//	at ?.I enter a percentage with the movie name(file:///C:/Users/ritio/OneDrive/Desktop/Mcast%20Degree/TestDrivenAssignmentRitiona/home/src/test/resources/dictionary.feature:41)
-//
+	Request request = new Request.Builder()
+			.url("https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=apple").get()
+			.addHeader("x-rapidapi-key", "ff14ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+			.addHeader("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").build();
 
-//You can implement missing steps with the snippets below:
+	@When("I dont pass the word")
+	public void i_dont_pass_the_word() {
+		MainClass.main(null);
+	}
 
-@Given("I dont pass the word")
-public void i_dont_pass_the_word() {
-    // Write code here that turns the phrase above into concrete actions
-    MainClass.main(null);
-}
-//
-@Given("Definition is available")
-public void definition_is_available(List<String> params) {
+	@Then("I check that the warning message is shown")
+	public void i_check_that_the_warning_message_is_shown() {
+		equals("Args is null: Cannot read the array length because \"args\" is null");
+	}
 
-	MainClass.main(params.toArray(new String[params.size()]));
-}
-//
-@When("I search for the word")
-public void i_search_for_the_word(List<String> params) {
-//    // Write code here that turns the phrase above into concrete actions
-//    // For automatic transformation, change DataTable to one of
-//    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-//    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-//    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-//    //
-//    // For other transformations you can register a DataTableType.
-//    throw new io.cucumber.java.PendingException();
-	MainClass.main(params.toArray(new String[params.size()]));
-}
-//
-//@Then("Return Word Does Not Exist")
-//public void return_Word_Does_Not_Exist() {
-//    // Write code here that turns the phrase above into concrete actions
-//    throw new io.cucumber.java.PendingException();
-//}
-//
-//
+	@Given("Definition is available")
+	public void definition_is_available(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
+	}
+
+	@When("I search for the word")
+	public void i_search_for_the_word(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
+	}
+
+	@Then("Return Word Does Not Exist")
+	public void return_Word_Does_Not_Exist() {
+		System.out.println("Outputs are the same");
+	}
+
+	@Given("I input jumbled multiple items")
+	public void i_input_jumbled_multiple_items(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
+	}
+
+	@When("I search for the item")
+	public void i_search_for_the_item(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
+	}
+
+	@Then("Return Word is invalid")
+	public void return_Word_is_invalid() {
+		System.out.println("Word Is Invalid");
+	}
+
+	@When("I search for multiple words")
+	public void i_search_for_multiple_words(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
+	}
+
+	@Then("No Definitions returned")
+	public void no_Definitions_returned() {
+		// Write code here that turns the phrase above into concrete actions
+		System.out.println("No Definitions Returned");
+	}
+
+	@Given("I enter a percentage with the definition name")
+	public void i_enter_a_percentage_with_the_definition_name(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
+	}
+
+	@Then("Definition Shall Not Be Returned")
+	public void definition_Shall_Not_Be_Returned() {
+		System.out.println("No Definition Found");
+	}
+
+	@Given("I input numbers in the word")
+	public void i_input_numbers_in_the_word(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
+	}
+
+	@Then("No Definition to be returned")
+	public void no_Definition_to_be_returned() {
+		System.out.println("No Definition Found");
+	}
+
+	@Given("I have an invalid key")
+	public void i_have_an_invalid_key() {
+		OkHttpClient client = new OkHttpClient();
+
+		Request request = new Request.Builder()
+				.url("https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=apple").get()
+				.addHeader("x-rapidapi-key", "ff13ffed2msh2f1f7c558b7c62dp13f2b0jsnd361f3ac8348")
+				.addHeader("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").build();
+
+	}
+
+	@Then("{int} error is returned")
+	public void error_is_returned(Integer int1) {
+
+		Response response;
+		try {
+			response = client.newCall(request).execute();
+			int responseCode = response.code();
+			assertEquals(403, responseCode);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@When("I Input A Word with spaces")
+	public void i_Input_A_Word_with_spaces(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
+	}
+
+	@Then("Word Should be provided")
+	public void word_Should_be_provided() {
+	    System.out.println("Word Is Successfully returned");
+	}
+
 
 }
