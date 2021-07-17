@@ -18,9 +18,22 @@ public class MainClass {
 	static Scanner sc = new Scanner(System.in);
 	static int i = 0;
 
-	public static void main(String[] args) throws IOException {
-		Menu(args);
-		System.out.println(args.length);
+	public static void main(String[] args)  {
+		try {
+
+			if (args.length != 0) {
+				System.out.println(getStringMovie(args[0]));
+				System.out.println(getJsonDefinition(args[4]));
+				System.out.println(getJsonCurrency(Double.parseDouble(args[1]), args[2], args[3]));
+
+			}
+
+		} catch (InputMismatchException ex) {
+			System.err.print(ex.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -36,19 +49,5 @@ public class MainClass {
 		return logic_1.getDefinition(word);
 	}
 
-	public static void Menu(String[] args) throws IOException {
 
-		try {
-
-			if (args.length != 0) {
-				System.out.println(getStringMovie(args[0]));
-				System.out.println(getJsonDefinition(args[4]));
-				System.out.println(getJsonCurrency(Double.parseDouble(args[1]), args[2], args[3]));
-
-			}
-
-		} catch (InputMismatchException ex) {
-			System.err.print(ex.getMessage());
-		}
-	}
 }

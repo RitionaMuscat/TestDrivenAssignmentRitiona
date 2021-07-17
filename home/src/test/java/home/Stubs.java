@@ -1,18 +1,9 @@
 package home;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
-
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-
-import io.restassured.RestAssured;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Stubs {
 
