@@ -17,10 +17,10 @@ public class DictionaryLogicLayer {
 		List<String> _Termlist = new ArrayList<String>();
 
 		try {
-			if (term.length() != 0 && term.contains("--") == false) {
+			if (term.length() != 0 && !term.contains("--") ) {
 				String json = dataLayer.getJsonDictionary(term);
+				
 				JSONObject jsonResponse = new JSONObject(json);
-
 				JSONArray hits = jsonResponse.getJSONArray("list");
 
 				for (int i = 0; i < hits.length(); i++) {
