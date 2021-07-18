@@ -1,6 +1,8 @@
 Feature: MainClass
 Scenario: No word is provided 
   When I dont pass the word
+  ||
+  |2|
   Then I check that the warning message is shown
 
 Scenario:  Authorized user is able to find a definition

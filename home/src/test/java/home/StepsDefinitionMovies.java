@@ -38,8 +38,8 @@ public class StepsDefinitionMovies {
 	}
 
 	@Given("I dont pass the movie name")
-	public void i_dont_pass_the_movie_name() {
-		MainClass.main(null);
+	public void i_dont_pass_the_movie_name(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
 	}
 
 	@Then("I check that the warning message is provided")

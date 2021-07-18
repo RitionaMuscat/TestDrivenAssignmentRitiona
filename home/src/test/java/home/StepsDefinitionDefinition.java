@@ -22,8 +22,8 @@ public class StepsDefinitionDefinition {
 			.addHeader("x-rapidapi-host", "mashape-community-urban-dictionary.p.rapidapi.com").build();
 
 	@When("I dont pass the word")
-	public void i_dont_pass_the_word() {
-		MainClass.main(null);
+	public void i_dont_pass_the_word(List<String> params) {
+		MainClass.main(params.toArray(new String[params.size()]));
 	}
 
 	@Then("I check that the warning message is shown")

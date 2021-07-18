@@ -1,6 +1,7 @@
 Feature: MainClass
 Scenario: Missing User Input
   Given I dont pass the movie name
+  ||
   Then I check that the warning message is provided
     
 Scenario: Movie Name Written half capital and half small
